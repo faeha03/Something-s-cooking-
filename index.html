@@ -14,53 +14,53 @@
 }
 
 body{
-  height:100vh;
-  background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fecfef);
+  min-height:100vh;
+  background:linear-gradient(135deg,#ff9a9e,#fecfef);
   display:flex;
-  justify-content:center;
+  flex-direction:column;
   align-items:center;
-  overflow:hidden;
+  justify-content:center;
+  padding:20px;
 }
 
 .container{
   text-align:center;
-  position:relative;
   width:100%;
-  max-width:420px;
+  max-width:400px;
 }
 
 .envelope{
-  width:280px;
-  height:180px;
+  width:100%;
+  height:200px;
   background:#fff;
   position:relative;
-  margin:0 auto;
-  border-radius:8px;
-  box-shadow:0 15px 35px rgba(0,0,0,0.3);
-  cursor:pointer;
-  transition:0.6s;
+  border-radius:10px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  margin-bottom:25px;
+  overflow:hidden;
 }
 
 .flap{
   position:absolute;
   width:100%;
   height:100%;
-  background:#ff6f91;
+  background:#ff4f81;
   clip-path:polygon(0 0, 50% 60%, 100% 0);
   transform-origin:top;
   transition:0.8s;
+  z-index:2;
 }
 
 .letter{
   position:absolute;
   width:100%;
   height:100%;
-  background:#fff8f0;
+  background:#fff8f5;
   padding:20px;
   text-align:center;
-  transform:translateY(100%);
   transition:0.8s;
-  border-radius:8px;
+  transform:translateY(100%);
+  z-index:1;
 }
 
 .envelope.open .flap{
@@ -74,36 +74,35 @@ body{
 h2{
   font-size:1.3rem;
   margin-bottom:10px;
-  color:#ff4f81;
+  color:#ff2f6d;
 }
 
 p{
-  font-size:0.95rem;
-  line-height:1.5;
+  font-size:1rem;
+  line-height:1.6;
   color:#444;
 }
 
 button{
-  margin-top:25px;
-  padding:12px 28px;
+  padding:14px 30px;
   border:none;
   border-radius:30px;
   background:#ff4f81;
   color:white;
   font-size:1rem;
   cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
   transition:0.3s;
 }
 
 button:hover{
-  transform:scale(1.1);
+  transform:scale(1.08);
   background:#ff2f6d;
 }
 
 #final{
-  margin-top:20px;
-  font-size:1.6rem;
+  margin-top:25px;
+  font-size:1.8rem;
   color:#ff2f6d;
   opacity:0;
   transition:1s;
@@ -118,12 +117,12 @@ button:hover{
 <div class="envelope" id="envelope">
   <div class="flap"></div>
   <div class="letter" id="letterContent">
-    <h2>Tap The Button Below 💌</h2>
-    <p>This letter is waiting for you...</p>
+    <h2>A Letter For You 💖</h2>
+    <p>Press the button below to open your first love letter...</p>
   </div>
 </div>
 
-<button onclick="nextLetter()">Open Next Letter ✨</button>
+<button id="openBtn" onclick="nextLetter()">Open Letter 💌</button>
 
 <div id="final"></div>
 
@@ -133,26 +132,26 @@ button:hover{
 
 let step = 0;
 
-const messages = [
+const letters = [
 {
 title:"Letter 1 💖",
-text:"From the moment you came into my life, something felt softer… warmer… brighter."
+text:"From the moment you entered my life, everything felt softer and brighter."
 },
 {
 title:"Letter 2 🌸",
-text:"You don’t just make me smile. You make my entire day feel lighter just by existing."
+text:"Your smile feels like comfort. Your voice feels like home."
 },
 {
 title:"Letter 3 ✨",
-text:"In a world full of noise, you feel like peace. Like home."
+text:"I don’t just love you for who you are… I love you for how you make me feel."
 },
 {
 title:"Letter 4 💞",
-text:"I don’t love you loudly. I love you deeply, gently, and completely."
+text:"With you, even ordinary days feel magical."
 },
 {
 title:"Final Letter ❤️",
-text:"So today, I open my heart fully and ask you something special..."
+text:"And today, I want to ask you something from my whole heart..."
 }
 ];
 
@@ -160,22 +159,22 @@ function nextLetter(){
   const envelope = document.getElementById("envelope");
   const letter = document.getElementById("letterContent");
   const final = document.getElementById("final");
+  const btn = document.getElementById("openBtn");
 
   envelope.classList.remove("open");
 
   setTimeout(()=>{
-    if(step < messages.length){
+    if(step < letters.length){
       letter.innerHTML = `
-        <h2>${messages[step].title}</h2>
-        <p>${messages[step].text}</p>
+        <h2>${letters[step].title}</h2>
+        <p>${letters[step].text}</p>
       `;
       envelope.classList.add("open");
       step++;
-    }
-    else{
+    } else {
       final.innerHTML = "Will You Be My Valentine? ❤️";
       final.style.opacity = "1";
-      document.querySelector("button").style.display="none";
+      btn.style.display = "none";
     }
   },400);
 }
