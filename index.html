@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You 💌</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fecfef);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  position:relative;
+  width:100%;
+  max-width:420px;
+}
+
+.envelope{
+  width:280px;
+  height:180px;
+  background:#fff;
+  position:relative;
+  margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+  cursor:pointer;
+  transition:0.6s;
+}
+
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ff6f91;
+  clip-path:polygon(0 0, 50% 60%, 100% 0);
+  transform-origin:top;
+  transition:0.8s;
+}
+
+.letter{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#fff8f0;
+  padding:20px;
+  text-align:center;
+  transform:translateY(100%);
+  transition:0.8s;
+  border-radius:8px;
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+}
+
+.envelope.open .letter{
+  transform:translateY(0);
+}
+
+h2{
+  font-size:1.3rem;
+  margin-bottom:10px;
+  color:#ff4f81;
+}
+
+p{
+  font-size:0.95rem;
+  line-height:1.5;
+  color:#444;
+}
+
+button{
+  margin-top:25px;
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  background:#ff4f81;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  background:#ff2f6d;
+}
+
+#final{
+  margin-top:20px;
+  font-size:1.6rem;
+  color:#ff2f6d;
+  opacity:0;
+  transition:1s;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="envelope" id="envelope">
+  <div class="flap"></div>
+  <div class="letter" id="letterContent">
+    <h2>Tap The Button Below 💌</h2>
+    <p>This letter is waiting for you...</p>
+  </div>
+</div>
+
+<button onclick="nextLetter()">Open Next Letter ✨</button>
+
+<div id="final"></div>
+
+</div>
+
+<script>
+
+let step = 0;
+
+const messages = [
+{
+title:"Letter 1 💖",
+text:"From the moment you came into my life, something felt softer… warmer… brighter."
+},
+{
+title:"Letter 2 🌸",
+text:"You don’t just make me smile. You make my entire day feel lighter just by existing."
+},
+{
+title:"Letter 3 ✨",
+text:"In a world full of noise, you feel like peace. Like home."
+},
+{
+title:"Letter 4 💞",
+text:"I don’t love you loudly. I love you deeply, gently, and completely."
+},
+{
+title:"Final Letter ❤️",
+text:"So today, I open my heart fully and ask you something special..."
+}
+];
+
+function nextLetter(){
+  const envelope = document.getElementById("envelope");
+  const letter = document.getElementById("letterContent");
+  const final = document.getElementById("final");
+
+  envelope.classList.remove("open");
+
+  setTimeout(()=>{
+    if(step < messages.length){
+      letter.innerHTML = `
+        <h2>${messages[step].title}</h2>
+        <p>${messages[step].text}</p>
+      `;
+      envelope.classList.add("open");
+      step++;
+    }
+    else{
+      final.innerHTML = "Will You Be My Valentine? ❤️";
+      final.style.opacity = "1";
+      document.querySelector("button").style.display="none";
+    }
+  },400);
+}
+
+</script>
+
+</body>
+</html>
